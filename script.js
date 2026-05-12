@@ -1,3 +1,15 @@
+const difficultySelect = document.getElementById("difficulty");
+
+let difficulty = "easy";
+
+const gameOverRanking = document.getElementById("game-over-ranking");
+
+const playerNameInput = document.getElementById("player-name");
+
+const rankingList = document.getElementById("ranking-list");
+
+let playerName = "";
+
 const homeScreen = document.getElementById("home-screen");
 
 const gameScreen = document.getElementById("game-screen");
@@ -37,6 +49,18 @@ restartButton.addEventListener("click", restartGame);
 function startGame() {
 
     clearInterval(timer);
+
+    playerName = playerNameInput.value;
+
+    difficulty = difficultySelect.value;
+
+if(playerName === ""){
+
+  alert("Digite seu nickname!");
+
+  return;
+
+}
 
   homeScreen.classList.add("hidden");
 
@@ -78,14 +102,75 @@ function startTimer() {
 // GENERATE QUESTION
 function generateQuestion() {
 
-  let num1 = Math.floor(Math.random() * 10);
+  let num1;
+  let num2;
+  let operation;
 
-  let num2 = Math.floor(Math.random() * 10);
+  // EASY
+  if(difficulty === "easy"){
 
-  correctAnswer = num1 + num2;
+    num1 = Math.floor(Math.random() * 10);
 
-  questionElement.textContent = `${num1} + ${num2}`;
+    num2 = Math.floor(Math.random() * 10);
 
+    operation = Math.random() > 0.5 ? "+" : "-";
+
+  }
+
+  // MEDIUM
+  else if(difficulty === "medium"){
+
+    num1 = Math.floor(Math.random() * 20);
+
+    num2 = Math.floor(Math.random() * 10);
+
+    operation = "*";
+
+  }
+
+  // HARD
+  else {
+
+    num2 = Math.floor(Math.random() * 10) + 1;
+
+    correctAnswer = Math.floor(Math.random() * 10);
+
+    num1 = correctAnswer * num2;
+
+    operation = "/";
+
+  }
+
+  // CALCULATE ANSWER
+  if(operation === "+"){
+
+    correctAnswer = num1 + num2;
+
+  }
+
+  else if(operation === "-"){
+
+    correctAnswer = num1 - num2;
+
+  }
+
+  else if(operation === "*"){
+
+    correctAnswer = num1 * num2;
+
+  }
+
+  else if(operation === "/"){
+
+    correctAnswer = num1 / num2;
+
+  }
+
+  // SHOW QUESTION
+  questionElement.textContent =
+    `${num1} ${operation} ${num2}`;
+
+  // ANSWERS
   let answers = [
     correctAnswer,
     correctAnswer + 1,
@@ -140,7 +225,9 @@ function endGame() {
   clearInterval(timer);
 
   finalScore.textContent = `Your score: ${score}`;
+    saveRanking();
 
+    showRanking();
   gameOverScreen.classList.remove("hidden");
 
 }
@@ -153,3 +240,50 @@ function restartGame() {
   startGame();
 
 }
+
+// SAVE RANKING
+function saveRanking() {
+
+  let ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+
+  ranking.push({
+    name: playerName,
+    score: score
+  });
+
+  ranking.sort((a, b) => b.score - a.score);
+
+  ranking = ranking.slice(0, 5);
+
+  localStorage.setItem("ranking", JSON.stringify(ranking));
+
+}
+
+// SHOW RANKING
+function showRanking() {
+
+  let ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+
+  rankingList.innerHTML = "";
+
+  gameOverRanking.innerHTML = "";
+
+  ranking.forEach(player => {
+
+    let liHome = document.createElement("li");
+
+    liHome.textContent = `${player.name} - ${player.score} XP`;
+
+    rankingList.appendChild(liHome);
+
+    let liGameOver = document.createElement("li");
+
+    liGameOver.textContent = `${player.name} - ${player.score} XP`;
+
+    gameOverRanking.appendChild(liGameOver);
+
+  });
+
+}
+
+showRanking();

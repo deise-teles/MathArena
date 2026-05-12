@@ -33,11 +33,41 @@
 
     <p class="subtitle">
       Teste suas habilidades matemáticas e suba no ranking.
+      <input
+        type="text"
+        id="player-name"
+        placeholder="Digite seu nickname"
+      />
+      <select id="difficulty">
+
+  <option value="easy">
+    Easy
+  </option>
+
+  <option value="medium">
+    Medium
+  </option>
+
+  <option value="hard">
+    Hard
+  </option>
+
+</select>
     </p>
 
     <button class="play-button" id="start-game">
       PLAY
     </button>
+
+    <div class="leaderboard">
+
+  <h2>TOP PLAYERS</h2>
+
+  <ul id="ranking-list">
+
+  </ul>
+
+</div>
 
   </main>
 
@@ -52,6 +82,14 @@
   <p id="final-score">
     Your score: 0
   </p>
+
+  <h2 class="game-over-ranking-title">
+  LEADERBOARD
+  </h2>
+
+  <ul id="game-over-ranking">
+
+  </ul>
 
   <button id="restart-button">
     PLAY AGAIN
