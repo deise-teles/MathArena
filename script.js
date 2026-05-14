@@ -1,3 +1,17 @@
+const correctSound = document.getElementById("correct-sound");
+
+const wrongSound = document.getElementById("wrong-sound");
+
+const gameoverSound = document.getElementById("gameover-sound");
+
+const streakElement = document.getElementById("streak");
+
+const levelElement = document.getElementById("level");
+
+let streak = 0;
+
+let level = 1;
+
 const difficultySelect = document.getElementById("difficulty");
 
 let difficulty = "easy";
@@ -67,11 +81,13 @@ if(playerName === ""){
   gameScreen.classList.remove("hidden");
 
   score = 0;
-
+  streak = 0;
+  level = 1;
   time = 30;
 
   scoreElement.textContent = `Score: ${score}`;
-
+  streakElement.textContent = `Streak: ${streak}`;
+  levelElement.textContent = `Level: ${level}`;
   timerElement.textContent = `Time: ${time}`;
 
   generateQuestion();
@@ -195,18 +211,37 @@ function checkAnswer(answer) {
 
   if(answer === correctAnswer){
 
-    score += 10;
+    correctSound.currentTime = 0;
 
-    scoreElement.textContent = `Score: ${score}`;
+    correctSound.play();
+  streak++;
 
-    questionBox.classList.add("correct");
+  let points = 10 + (streak * 2);
 
-    setTimeout(() => {
-      questionBox.classList.remove("correct");
-    }, 400);
+  score += points;
 
-  } else {
+  // LEVEL SYSTEM
+  level = Math.floor(score / 100) + 1;
 
+  scoreElement.textContent = `Score: ${score}`;
+
+  streakElement.textContent = `Streak: ${streak}`;
+
+  levelElement.textContent = `Level: ${level}`;
+
+  questionBox.classList.add("correct");
+
+  setTimeout(() => {
+    questionBox.classList.remove("correct");
+  }, 400);
+
+} else {
+  wrongSound.currentTime = 0;
+
+  wrongSound.play();
+  streak = 0;
+
+  streakElement.textContent = `Streak: ${streak}`;
     questionBox.classList.add("wrong");
 
     setTimeout(() => {
@@ -223,6 +258,7 @@ function checkAnswer(answer) {
 function endGame() {
 
   clearInterval(timer);
+  gameoverSound.play();
 
   finalScore.textContent = `Your score: ${score}`;
     saveRanking();
