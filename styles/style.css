@@ -22,6 +22,10 @@ body {
 
   font-family: 'Orbitron', sans-serif;
   color: white;
+  background:
+  radial-gradient(circle at top,
+  #1e3a8a,
+  #020617 70%);
 }
 
 .container {
@@ -38,6 +42,33 @@ body {
     0 0 10px #38bdf8,
     0 0 20px #38bdf8,
     0 0 40px #38bdf8;
+}
+.logo {
+
+  animation: neonPulse 2s infinite;
+
+}
+
+@keyframes neonPulse {
+
+  0% {
+    text-shadow:
+      0 0 10px #38bdf8,
+      0 0 20px #38bdf8;
+  }
+
+  50% {
+    text-shadow:
+      0 0 20px #38bdf8,
+      0 0 40px #38bdf8;
+  }
+
+  100% {
+    text-shadow:
+      0 0 10px #38bdf8,
+      0 0 20px #38bdf8;
+  }
+
 }
 
 .subtitle {
@@ -363,5 +394,79 @@ body {
     0 0 10px #facc15,
     0 0 20px #facc15,
     0 0 40px #facc15;
+
+}
+@media (max-width: 768px) {
+
+  .container {
+    width: 95%;
+  }
+
+  .top-bar {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+
+    text-align: center;
+  }
+
+  .question-box {
+    font-size: 3rem;
+
+    padding: 40px 20px;
+  }
+
+  .answers {
+    grid-template-columns: 1fr;
+  }
+
+  .answer-btn {
+    width: 100%;
+
+    font-size: 1.3rem;
+  }
+
+  .play-button,
+  #difficulty,
+  #player-name {
+    width: 100%;
+  }
+
+  .logo {
+    font-size: 3rem;
+  }
+
+}
+.menu-button {
+
+  margin-top: 15px;
+
+  padding: 15px 40px;
+
+  border: none;
+
+  border-radius: 15px;
+
+  background: #38bdf8;
+
+  color: white;
+
+  font-size: 1.2rem;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+
+}
+
+.menu-button:hover {
+
+  transform: scale(1.05);
+
+  background: #0ea5e9;
 
 }

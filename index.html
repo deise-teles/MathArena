@@ -1,84 +1,87 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>MathArena</title>
 
-  <link rel="stylesheet" href="style.css" />
+  <link
+    rel="stylesheet"
+    href="styles/style.css"
+  />
+
 </head>
-
-<body>
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>MathArena</title>
-
-  <link rel="stylesheet" href="style.css" />
-</head>
-
-<body>
 
 <body>
 
   <!-- HOME -->
   <main class="container" id="home-screen">
 
-    <h1 class="logo">MathArena</h1>
+    <h1 class="logo">
+      MathArena
+    </h1>
 
     <p class="subtitle">
-      Teste suas habilidades matemáticas e suba no ranking.
-      <input
-        type="text"
-        id="player-name"
-        placeholder="Digite seu nickname"
-      />
-      <select id="difficulty">
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
-
-      </select>
+      Teste suas habilidades matemáticas
+      e suba no ranking.
     </p>
 
-    <button class="play-button" id="start-game">PLAY</button>
+    <input
+      type="text"
+      id="player-name"
+      placeholder="Digite seu nickname"
+    />
+
+    <select id="difficulty">
+
+      <option value="easy">
+        Easy
+      </option>
+
+      <option value="medium">
+        Medium
+      </option>
+
+      <option value="hard">
+        Hard
+      </option>
+
+    </select>
+
+    <button
+      class="play-button"
+      id="start-game"
+    >
+      PLAY
+    </button>
 
     <div class="leaderboard">
+
       <h2>TOP PLAYERS</h2>
-      <ul id="ranking-list"></ul>
+
+      <ul id="ranking-list">
+
+      </ul>
+
     </div>
 
   </main>
 
   <!-- GAME SCREEN -->
-  <section class="game-screen hidden" id="game-screen">
-    <!-- GAME OVER -->
-    <div class="game-over hidden" id="game-over">
-    <h1>GAME OVER</h1>
-
-    <p id="final-score">
-      Your score: 0
-    </p>
-
-    <h2 class="game-over-ranking-title">
-      LEADERBOARD
-    </h2>
-
-    <ul id="game-over-ranking">
-    </ul>
-
-    <button id="restart-button">
-      PLAY AGAIN
-    </button>
-
-    </div>
+  <section
+    class="game-screen hidden"
+    id="game-screen"
+  >
 
     <div class="top-bar">
+
       <h2 id="score">
         Score: 0
       </h2>
@@ -97,7 +100,10 @@
 
     </div>
 
-    <div class="question-box" id="question-box">
+    <div
+      class="question-box"
+      id="question-box"
+    >
 
       <h1 id="question">
         5 + 8
@@ -107,25 +113,77 @@
 
     <div class="answers">
 
-      <button class="answer-btn">10</button>
-      <button class="answer-btn">13</button>
-      <button class="answer-btn">15</button>
-      <button class="answer-btn">20</button>
+      <button class="answer-btn">
+        10
+      </button>
+
+      <button class="answer-btn">
+        13
+      </button>
+
+      <button class="answer-btn">
+        15
+      </button>
+
+      <button class="answer-btn">
+        20
+      </button>
 
     </div>
 
   </section>
 
+  <!-- GAME OVER -->
+  <div
+    id="game-over"
+    class="hidden"
+  >
 
-  <audio id="correct-sound" src="assets/sounds/correct.mp3"></audio>
+    <h1>
+      GAME OVER
+    </h1>
 
-  <audio id="wrong-sound" src="assets/sounds/wrong.mp3"></audio>
+    <p id="final-score">
+      Your score: 0
+    </p>
 
-  <audio id="gameover-sound" src="assets/sounds/gameover.mp3"></audio>
-  
-  
+    <h2 class="game-over-ranking-title">
+      LEADERBOARD
+    </h2>
+
+    <ul id="game-over-ranking">
+
+    </ul>
+
+    <button id="restart-button"  class="menu-button">
+      Play Again
+    </button>
+
+    <button id="home-button"  class="menu-button">
+      Home
+    </button>
+
+  </div>
+
+  <!-- AUDIO -->
+  <audio
+    id="correct-sound"
+    src="assets/sounds/correct.mp3"
+  ></audio>
+
+  <audio
+    id="wrong-sound"
+    src="assets/sounds/wrong.mp3"
+  ></audio>
+
+  <audio
+    id="gameover-sound"
+    src="assets/sounds/gameover.mp3"
+  ></audio>
+
+  <!-- SCRIPT -->
   <script src="script.js"></script>
-</body>
 
+</body>
 
 </html>

@@ -1,52 +1,87 @@
-const correctSound = document.getElementById("correct-sound");
+// =========================
+// AUDIO
+// =========================
 
-const wrongSound = document.getElementById("wrong-sound");
+const correctSound =
+document.getElementById("correct-sound");
 
-const gameoverSound = document.getElementById("gameover-sound");
+const wrongSound =
+document.getElementById("wrong-sound");
 
-const streakElement = document.getElementById("streak");
+const gameoverSound =
+document.getElementById("gameover-sound");
 
-const levelElement = document.getElementById("level");
+// =========================
+// UI ELEMENTS
+// =========================
+
+const homeScreen =
+document.getElementById("home-screen");
+
+const homeButton =
+document.getElementById("home-button");
+
+const gameScreen =
+document.getElementById("game-screen");
+
+const gameOverScreen =
+document.getElementById("game-over");
+
+const startButton =
+document.getElementById("start-game");
+
+const restartButton =
+document.getElementById("restart-button");
+
+const playerNameInput =
+document.getElementById("player-name");
+
+const difficultySelect =
+document.getElementById("difficulty");
+
+const questionElement =
+document.getElementById("question");
+
+const questionBox =
+document.getElementById("question-box");
+
+const answerButtons =
+document.querySelectorAll(".answer-btn");
+
+const scoreElement =
+document.getElementById("score");
+
+const streakElement =
+document.getElementById("streak");
+
+const levelElement =
+document.getElementById("level");
+
+const timerElement =
+document.getElementById("timer");
+
+const finalScore =
+document.getElementById("final-score");
+
+const rankingList =
+document.getElementById("ranking-list");
+
+const gameOverRanking =
+document.getElementById("game-over-ranking");
+
+// =========================
+// GAME VARIABLES
+// =========================
+
+let playerName = "";
+
+let score = 0;
 
 let streak = 0;
 
 let level = 1;
 
-const difficultySelect = document.getElementById("difficulty");
-
-let difficulty = "easy";
-
-const gameOverRanking = document.getElementById("game-over-ranking");
-
-const playerNameInput = document.getElementById("player-name");
-
-const rankingList = document.getElementById("ranking-list");
-
-let playerName = "";
-
-const homeScreen = document.getElementById("home-screen");
-
-const gameScreen = document.getElementById("game-screen");
-
-const startButton = document.getElementById("start-game");
-
-const questionElement = document.getElementById("question");
-
-const answerButtons = document.querySelectorAll(".answer-btn");
-
-const scoreElement = document.getElementById("score");
-
-const timerElement = document.getElementById("timer");
-
-const questionBox = document.getElementById("question-box");
-
-const gameOverScreen = document.getElementById("game-over");
-
-const finalScore = document.getElementById("final-score");
-
-const restartButton = document.getElementById("restart-button");
-
-let score = 0;
+let bestStreak = 0;
 
 let correctAnswer;
 
@@ -54,19 +89,70 @@ let time = 30;
 
 let timer;
 
-// START GAME
-startButton.addEventListener("click", startGame);
+let difficulty = "easy";
 
-// RESTART GAME
-restartButton.addEventListener("click", restartGame);
+// =========================
+// EVENTS
+// =========================
+
+startButton.addEventListener(
+  "click",
+  startGame
+);
+
+restartButton.addEventListener(
+  "click",
+  restartGame
+);
+
+homeButton.addEventListener(
+  "click",
+  goHome
+);
+
+// =========================
+// START GAME
+// =========================
 
 function startGame() {
 
   clearInterval(timer);
 
-  playerName = playerNameInput.value;
+  playerName =
+  playerNameInput.value.trim();
 
-    difficulty = difficultySelect.value;
+  difficulty =
+  difficultySelect.value;
+
+  questionBox.classList.remove(
+  "easy-mode",
+  "medium-mode",
+  "hard-mode"
+);
+
+if(difficulty === "easy"){
+
+  questionBox.classList.add(
+    "easy-mode"
+  );
+
+}
+
+else if(difficulty === "medium"){
+
+  questionBox.classList.add(
+    "medium-mode"
+  );
+
+}
+
+else {
+
+  questionBox.classList.add(
+    "hard-mode"
+  );
+
+}
 
   if(playerName === ""){
 
@@ -76,66 +162,102 @@ function startGame() {
 
   }
 
+  // RESET VALUES
+  score = 0;
+
+  streak = 0;
+
+  level = 1;
+
+  bestStreak = 0;
+
+  time = 30;
+
+  // UPDATE UI
+  scoreElement.textContent =
+  `Score: ${score}`;
+
+  streakElement.textContent =
+  `Streak: ${streak}`;
+
+  levelElement.textContent =
+  `Level: ${level}`;
+
+  timerElement.textContent =
+  `Time: ${time}`;
+
+  // CHANGE SCREENS
   homeScreen.classList.add("hidden");
 
   gameScreen.classList.remove("hidden");
 
-  score = 0;
-  streak = 0;
-  level = 1;
-  time = 30;
+  gameOverScreen.classList.add("hidden");
 
-  scoreElement.textContent = `Score: ${score}`;
-  streakElement.textContent = `Streak: ${streak}`;
-  levelElement.textContent = `Level: ${level}`;
-  timerElement.textContent = `Time: ${time}`;
-
+  // START SYSTEMS
   generateQuestion();
 
   startTimer();
 
 }
 
+// =========================
 // TIMER
+// =========================
+
 function startTimer() {
 
   timer = setInterval(() => {
 
-  time--;
+    time--;
 
-  timerElement.textContent = `Time: ${time}`;
+    timerElement.textContent =
+    `Time: ${time}`;
 
-  if(time <= 0){
+    if(time <= 0){
 
-   endGame();
+      endGame();
 
-  }
+    }
 
   }, 1000);
 
 }
 
+// =========================
 // GENERATE QUESTION
+// =========================
+
 function generateQuestion() {
 
   let num1;
+
   let num2;
+
   let operation;
 
   // EASY
   if(difficulty === "easy"){
 
-    num1 = Math.floor(Math.random() * 10);
-    num2 = Math.floor(Math.random() * 10);
-    operation = Math.random() > 0.5 ? "+" : "-";
+    num1 =
+    Math.floor(Math.random() * 10);
+
+    num2 =
+    Math.floor(Math.random() * 10);
+
+    operation =
+    Math.random() > 0.5 ? "+" : "-";
 
   }
 
   // MEDIUM
   else if(difficulty === "medium"){
 
-    num1 = Math.floor(Math.random() * 20);
-    num2 = Math.floor(Math.random() * 10);
+    num1 =
+    Math.floor(Math.random() * 20);
+
+    num2 =
+    Math.floor(Math.random() * 10);
+
     operation = "*";
 
   }
@@ -143,113 +265,192 @@ function generateQuestion() {
   // HARD
   else {
 
-    num2 = Math.floor(Math.random() * 10) + 1;
-    correctAnswer = Math.floor(Math.random() * 10);
-    num1 = correctAnswer * num2;
+    num2 =
+    Math.floor(Math.random() * 10) + 1;
+
+    correctAnswer =
+    Math.floor(Math.random() * 10);
+
+    num1 =
+    correctAnswer * num2;
+
     operation = "/";
 
   }
 
   // CALCULATE ANSWER
-  if(operation === "+"){
+  switch(operation){
 
-    correctAnswer = num1 + num2;
+    case "+":
+      correctAnswer = num1 + num2;
+      break;
 
-  }
+    case "-":
+      correctAnswer = num1 - num2;
+      break;
 
-  else if(operation === "-"){
+    case "*":
+      correctAnswer = num1 * num2;
+      break;
 
-    correctAnswer = num1 - num2;
-
-  }
-
-  else if(operation === "*"){
-
-    correctAnswer = num1 * num2;
-
-  }
-
-  else if(operation === "/"){
-
-    correctAnswer = num1 / num2;
+    case "/":
+      correctAnswer = num1 / num2;
+      break;
 
   }
 
   // SHOW QUESTION
-  questionElement.textContent =
-    `${num1} ${operation} ${num2}`;
+  let displayOperation = operation;
 
-  // ANSWERS
+  if(operation === "*"){
+
+  displayOperation = "x";
+
+  }
+
+  questionElement.textContent =
+`${num1} ${displayOperation} ${num2}`;
+
+  // CREATE ANSWERS
   let answers = [
+
     correctAnswer,
+
     correctAnswer + 1,
+
     correctAnswer - 1,
+
     correctAnswer + 2
+
   ];
 
-  answers = answers.sort(() => Math.random() - 0.5);
+  // SHUFFLE
+  answers =
+  answers.sort(() => Math.random() - 0.5);
 
+  // UPDATE BUTTONS
   answerButtons.forEach((button, index) => {
 
-    button.textContent = answers[index];
-    button.onclick = () => checkAnswer(answers[index]);
+    button.textContent =
+    answers[index];
+
+    button.onclick = () =>
+    checkAnswer(answers[index]);
 
   });
 
 }
 
+// =========================
 // CHECK ANSWER
+// =========================
+
 function checkAnswer(answer) {
 
+  // CORRECT ANSWER
   if(answer === correctAnswer){
 
     correctSound.currentTime = 0;
+
     correctSound.play();
+
     streak++;
 
-    let points = 10 + (streak * 2);
+    // BEST STREAK
+    if(streak > bestStreak){
+
+      bestStreak = streak;
+
+    }
+
+    // SCORE SYSTEM
+    let points =
+    10 + (streak * 2);
 
     score += points;
-    showFloatingPoints(points);
 
     // LEVEL SYSTEM
-    level = Math.floor(score / 100) + 1;
+    level =
+    Math.floor(score / 100) + 1;
 
-    scoreElement.textContent = `Score: ${score}`;
+    // UPDATE UI
+    scoreElement.textContent =
+    `Score: ${score}`;
 
-    streakElement.textContent = `Streak: ${streak}`;
+    streakElement.textContent =
+    `Streak: ${streak}`;
+
+    levelElement.textContent =
+    `Level: ${level}`;
+
+    // FLOATING XP
+    showFloatingPoints(points);
+
+    // SUPER STREAK EFFECT
     if(streak >= 5){
-      streakElement.classList.add("super-streak");
+
+      streakElement.classList.add(
+        "super-streak"
+      );
+
     } else {
 
-    streakElement.classList.remove("super-streak");
+      streakElement.classList.remove(
+        "super-streak"
+      );
+
+    }
+
+    // VISUAL FEEDBACK
+    questionBox.classList.add("correct");
+
+    setTimeout(() => {
+
+      questionBox.classList.remove(
+        "correct"
+      );
+
+    }, 400);
 
   }
 
-  levelElement.textContent = `Level: ${level}`;
+  // WRONG ANSWER
+  else {
 
-  questionBox.classList.add("correct");
+    wrongSound.currentTime = 0;
 
-  setTimeout(() => {
-    questionBox.classList.remove("correct");
-  }, 400);
+    wrongSound.play();
 
-} else {
+    // SCREEN SHAKE
+    document.body.classList.add("shake");
 
-  wrongSound.currentTime = 0;
-  wrongSound.play();
-  document.body.classList.add("shake");
+    setTimeout(() => {
 
-  setTimeout(() => {
-    document.body.classList.remove("shake");
-  }, 300);
-  streak = 0;
-  streakElement.classList.remove("super-streak");
-  streakElement.textContent = `Streak: ${streak}`;
+      document.body.classList.remove(
+        "shake"
+      );
+
+    }, 300);
+
+    // RESET STREAK
+    streak = 0;
+
+    streakElement.textContent =
+    `Streak: ${streak}`;
+
+    streakElement.classList.remove(
+      "super-streak"
+    );
+
+    // VISUAL FEEDBACK
     questionBox.classList.add("wrong");
 
     setTimeout(() => {
-      questionBox.classList.remove("wrong");
+
+      questionBox.classList.remove(
+        "wrong"
+      );
+
     }, 400);
 
   }
@@ -258,93 +459,200 @@ function checkAnswer(answer) {
 
 }
 
+// =========================
 // END GAME
+// =========================
+
 function endGame() {
 
   clearInterval(timer);
+
   gameoverSound.play();
 
-  finalScore.textContent = `Your score: ${score}`;
-    saveRanking();
+  finalScore.textContent =
+  `Your score: ${score}`;
 
-    showRanking();
-  gameOverScreen.classList.remove("hidden");
+  saveRanking();
+
+  showRanking();
+
+  gameScreen.classList.add("hidden");
+
+  gameOverScreen.classList.remove(
+    "hidden"
+  );
 
 }
 
-// RESTART
+// =========================
+// RESTART GAME
+// =========================
+
 function restartGame() {
 
-  gameOverScreen.classList.add("hidden");
+  gameOverScreen.classList.add(
+    "hidden"
+  );
+
   startGame();
 
 }
+function goHome() {
 
-// SAVE RANKING
-function saveRanking() {
+  clearInterval(timer);
 
-  let ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+  gameOverScreen.classList.add(
+    "hidden"
+  );
 
-  ranking.push({
-    name: playerName,
-    score: score
-  });
+  gameScreen.classList.add(
+    "hidden"
+  );
 
-  ranking.sort((a, b) => b.score - a.score);
-
-  ranking = ranking.slice(0, 5);
-
-  localStorage.setItem("ranking", JSON.stringify(ranking));
+  homeScreen.classList.remove(
+    "hidden"
+  );
 
 }
 
+// =========================
+// SAVE RANKING
+// =========================
+
+function saveRanking() {
+
+  let ranking =
+
+  JSON.parse(
+    localStorage.getItem("ranking")
+  ) || [];
+
+  ranking.push({
+
+    name: playerName,
+
+    score: score
+
+  });
+
+  // SORT
+  ranking.sort((a, b) =>
+
+    b.score - a.score
+
+  );
+
+  // TOP 5
+  ranking = ranking.slice(0, 5);
+
+  localStorage.setItem(
+
+    "ranking",
+
+    JSON.stringify(ranking)
+
+  );
+
+}
+
+// =========================
 // SHOW RANKING
+// =========================
+
 function showRanking() {
 
-  let ranking = JSON.parse(localStorage.getItem("ranking")) || [];
+  let ranking =
+
+  JSON.parse(
+    localStorage.getItem("ranking")
+  ) || [];
 
   rankingList.innerHTML = "";
 
   gameOverRanking.innerHTML = "";
 
-  ranking.forEach(player => {
+  ranking.forEach((player, index) => {
 
-    let liHome = document.createElement("li");
+    let medal = "";
 
-    liHome.textContent = `${player.name} - ${player.score} XP`;
+    if(index === 0){
+
+      medal = "🥇";
+
+    }
+
+    else if(index === 1){
+
+      medal = "🥈";
+
+    }
+
+    else if(index === 2){
+
+      medal = "🥉";
+
+    }
+
+    // HOME RANKING
+    let liHome =
+    document.createElement("li");
+
+    liHome.textContent =
+    `${medal} ${player.name} - ${player.score} XP`;
 
     rankingList.appendChild(liHome);
 
-    let liGameOver = document.createElement("li");
+    // GAME OVER RANKING
+    let liGameOver =
+    document.createElement("li");
 
-    liGameOver.textContent = `${player.name} - ${player.score} XP`;
+    liGameOver.textContent =
+    `${medal} ${player.name} - ${player.score} XP`;
 
-    gameOverRanking.appendChild(liGameOver);
+    gameOverRanking.appendChild(
+      liGameOver
+    );
 
   });
 
 }
 
-showRanking();
+// =========================
+// FLOATING XP
+// =========================
 
 function showFloatingPoints(points){
 
-  const floatingText = document.createElement("div");
+  const floatingText =
+  document.createElement("div");
 
-  floatingText.classList.add("floating-points");
+  floatingText.classList.add(
+    "floating-points"
+  );
 
-  floatingText.textContent = `+${points} XP`;
+  floatingText.textContent =
+  `+${points} XP`;
 
   floatingText.style.left =
-    Math.random() * 70 + 15 + "%";
+  Math.random() * 70 + 15 + "%";
 
   floatingText.style.top =
-    "40%";
+  "40%";
 
-  document.body.appendChild(floatingText);
+  document.body.appendChild(
+    floatingText
+  );
 
   setTimeout(() => {
+
     floatingText.remove();
+
   }, 1000);
 
 }
+
+// =========================
+// INITIAL LOAD
+// =========================
+
+showRanking();
