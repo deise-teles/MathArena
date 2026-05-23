@@ -62,19 +62,19 @@ restartButton.addEventListener("click", restartGame);
 
 function startGame() {
 
-    clearInterval(timer);
+  clearInterval(timer);
 
-    playerName = playerNameInput.value;
+  playerName = playerNameInput.value;
 
     difficulty = difficultySelect.value;
 
-if(playerName === ""){
+  if(playerName === ""){
 
-  alert("Digite seu nickname!");
+    alert("Digite seu nickname!");
 
-  return;
+    return;
 
-}
+  }
 
   homeScreen.classList.add("hidden");
 
@@ -101,15 +101,15 @@ function startTimer() {
 
   timer = setInterval(() => {
 
-    time--;
+  time--;
 
-    timerElement.textContent = `Time: ${time}`;
+  timerElement.textContent = `Time: ${time}`;
 
-    if(time <= 0){
+  if(time <= 0){
 
-      endGame();
+   endGame();
 
-    }
+  }
 
   }, 1000);
 
@@ -126,9 +126,7 @@ function generateQuestion() {
   if(difficulty === "easy"){
 
     num1 = Math.floor(Math.random() * 10);
-
     num2 = Math.floor(Math.random() * 10);
-
     operation = Math.random() > 0.5 ? "+" : "-";
 
   }
@@ -137,9 +135,7 @@ function generateQuestion() {
   else if(difficulty === "medium"){
 
     num1 = Math.floor(Math.random() * 20);
-
     num2 = Math.floor(Math.random() * 10);
-
     operation = "*";
 
   }
@@ -148,11 +144,8 @@ function generateQuestion() {
   else {
 
     num2 = Math.floor(Math.random() * 10) + 1;
-
     correctAnswer = Math.floor(Math.random() * 10);
-
     num1 = correctAnswer * num2;
-
     operation = "/";
 
   }
@@ -199,7 +192,6 @@ function generateQuestion() {
   answerButtons.forEach((button, index) => {
 
     button.textContent = answers[index];
-
     button.onclick = () => checkAnswer(answers[index]);
 
   });
@@ -212,20 +204,27 @@ function checkAnswer(answer) {
   if(answer === correctAnswer){
 
     correctSound.currentTime = 0;
-
     correctSound.play();
-  streak++;
+    streak++;
 
-  let points = 10 + (streak * 2);
+    let points = 10 + (streak * 2);
 
-  score += points;
+    score += points;
+    showFloatingPoints(points);
 
-  // LEVEL SYSTEM
-  level = Math.floor(score / 100) + 1;
+    // LEVEL SYSTEM
+    level = Math.floor(score / 100) + 1;
 
-  scoreElement.textContent = `Score: ${score}`;
+    scoreElement.textContent = `Score: ${score}`;
 
-  streakElement.textContent = `Streak: ${streak}`;
+    streakElement.textContent = `Streak: ${streak}`;
+    if(streak >= 5){
+      streakElement.classList.add("super-streak");
+    } else {
+
+    streakElement.classList.remove("super-streak");
+
+  }
 
   levelElement.textContent = `Level: ${level}`;
 
@@ -236,11 +235,16 @@ function checkAnswer(answer) {
   }, 400);
 
 } else {
+
   wrongSound.currentTime = 0;
-
   wrongSound.play();
-  streak = 0;
+  document.body.classList.add("shake");
 
+  setTimeout(() => {
+    document.body.classList.remove("shake");
+  }, 300);
+  streak = 0;
+  streakElement.classList.remove("super-streak");
   streakElement.textContent = `Streak: ${streak}`;
     questionBox.classList.add("wrong");
 
@@ -272,7 +276,6 @@ function endGame() {
 function restartGame() {
 
   gameOverScreen.classList.add("hidden");
-
   startGame();
 
 }
@@ -323,3 +326,25 @@ function showRanking() {
 }
 
 showRanking();
+
+function showFloatingPoints(points){
+
+  const floatingText = document.createElement("div");
+
+  floatingText.classList.add("floating-points");
+
+  floatingText.textContent = `+${points} XP`;
+
+  floatingText.style.left =
+    Math.random() * 70 + 15 + "%";
+
+  floatingText.style.top =
+    "40%";
+
+  document.body.appendChild(floatingText);
+
+  setTimeout(() => {
+    floatingText.remove();
+  }, 1000);
+
+}

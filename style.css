@@ -310,3 +310,58 @@ body {
 
   cursor: pointer;
 }
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+
+  0% { transform: translateX(0); }
+
+  25% { transform: translateX(-10px); }
+
+  50% { transform: translateX(10px); }
+
+  75% { transform: translateX(-10px); }
+
+  100% { transform: translateX(0); }
+
+}
+.floating-points {
+
+  position: absolute;
+
+  font-size: 2rem;
+
+  font-weight: bold;
+
+  color: #22c55e;
+
+  animation: floatUp 1s forwards;
+
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-80px);
+  }
+
+}
+.super-streak {
+
+  color: #facc15;
+
+  text-shadow:
+    0 0 10px #facc15,
+    0 0 20px #facc15,
+    0 0 40px #facc15;
+
+}

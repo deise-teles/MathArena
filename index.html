@@ -39,85 +39,63 @@
         placeholder="Digite seu nickname"
       />
       <select id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
 
-  <option value="easy">
-    Easy
-  </option>
-
-  <option value="medium">
-    Medium
-  </option>
-
-  <option value="hard">
-    Hard
-  </option>
-
-</select>
+      </select>
     </p>
 
-    <button class="play-button" id="start-game">
-      PLAY
-    </button>
+    <button class="play-button" id="start-game">PLAY</button>
 
     <div class="leaderboard">
-
-  <h2>TOP PLAYERS</h2>
-
-  <ul id="ranking-list">
-
-  </ul>
-
-</div>
+      <h2>TOP PLAYERS</h2>
+      <ul id="ranking-list"></ul>
+    </div>
 
   </main>
 
   <!-- GAME SCREEN -->
   <section class="game-screen hidden" id="game-screen">
     <!-- GAME OVER -->
+    <div class="game-over hidden" id="game-over">
+    <h1>GAME OVER</h1>
 
-<div class="game-over hidden" id="game-over">
+    <p id="final-score">
+      Your score: 0
+    </p>
 
-  <h1>GAME OVER</h1>
+    <h2 class="game-over-ranking-title">
+      LEADERBOARD
+    </h2>
 
-  <p id="final-score">
-    Your score: 0
-  </p>
+    <ul id="game-over-ranking">
+    </ul>
 
-  <h2 class="game-over-ranking-title">
-  LEADERBOARD
-  </h2>
+    <button id="restart-button">
+      PLAY AGAIN
+    </button>
 
-  <ul id="game-over-ranking">
+    </div>
 
-  </ul>
+    <div class="top-bar">
+      <h2 id="score">
+        Score: 0
+      </h2>
 
-  <button id="restart-button">
-    PLAY AGAIN
-  </button>
+      <h2 id="streak">
+        Streak: 0
+      </h2>
 
-</div>
+      <h2 id="level">
+        Level: 1
+      </h2>
 
-    < class="top-bar">
+      <h2 id="timer">
+        Time: 30
+      </h2>
 
-      <div class="top-bar">
-
-        <h2 id="score">
-          Score: 0
-        </h2>
-
-        <h2 id="streak">
-          Streak: 0
-        </h2>
-
-        <h2 id="level">
-          Level: 1
-        </h2>
-
-        <h2 id="timer">
-          Time: 30
-        </h2>
-
-      </div>
+    </div>
 
     <div class="question-box" id="question-box">
 
